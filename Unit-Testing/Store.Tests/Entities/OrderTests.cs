@@ -7,7 +7,14 @@ namespace Store.Tests.Entities
     {
         [TestMethod]
         [TestCategory("Domain")]
-        public void Had_a_new_valid_order_it_was_did_must_generate_a_number_with_8_characters()
+        public void Have_a_new_valid_order_it_was_did_must_generate_a_number_with_8_characters()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void Have_a_new_order_your_status_must_be_waiting_payment()
         {
             Assert.Fail();
         }
