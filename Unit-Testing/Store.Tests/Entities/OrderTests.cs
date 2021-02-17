@@ -21,7 +21,7 @@ namespace Store.Tests.Entities
         }
         [TestMethod]
         [TestCategory("Domain")]
-        public void Have_a_new_valid_order_it_was__must_generate_a_number_with_8_characters()
+        public void Have_a_new_valid_order_it_was_must_generate_a_number_with_8_characters()
         {
             Assert.AreEqual(8, _order.Number.Length);
         }
@@ -37,7 +37,9 @@ namespace Store.Tests.Entities
         [TestCategory("Domain")]
         public void Have_a_payment_order_your_status_must_be_waiting_delivery()
         {
-            Assert.Fail();
+            _order.AddItem(_product, 1);
+            _order.Pay(10);
+            Assert.AreEqual(_order.Status, EOrderStatus.WaitingDelivery);
         }
     }
 }
