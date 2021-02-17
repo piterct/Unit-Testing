@@ -41,5 +41,15 @@ namespace Store.Tests.Entities
             _order.Pay(10);
             Assert.AreEqual(_order.Status, EOrderStatus.WaitingDelivery);
         }
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void The_status_order_must_be_canceled_when_the_order_was_cancel()
+        {
+            _order.AddItem(_product, 1);
+            _order.Pay(10);
+            _order.Cancel();
+            Assert.AreEqual(_order.Status, EOrderStatus.Canceled);
+        }
     }
 }
