@@ -51,5 +51,13 @@ namespace Store.Tests.Entities
             _order.Cancel();
             Assert.AreEqual(_order.Status, EOrderStatus.Canceled);
         }
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_no_product_in_item_not_add_item()
+        {
+            _order.AddItem(null, 10);
+            Assert.AreEqual(_order.Items.Count, 0);
+        }
     }
 }
