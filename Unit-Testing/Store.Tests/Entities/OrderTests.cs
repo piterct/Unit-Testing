@@ -59,5 +59,13 @@ namespace Store.Tests.Entities
             _order.AddItem(null, 10);
             Assert.AreEqual(_order.Items.Count, 0);
         }
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_item_order_with_quantity_less_or_equal_zero_not_must_add_item()
+        {
+            _order.AddItem(_product, -10);
+            Assert.AreEqual(_order.Items.Count, 0);
+        }
     }
 }
