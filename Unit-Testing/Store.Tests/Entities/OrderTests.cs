@@ -12,12 +12,15 @@ namespace Store.Tests.Entities
         private readonly Customer _customer;
         private readonly Order _order;
         private readonly Product _product;
+        private readonly Discount _discount;
 
         public OrderTests()
         {
             _customer = new Customer("Michael Peter", "michael_piterct@hotmail.com");
             _order = new Order(_customer, 0, null);
             _product = new Product("Produto 1", 10, true);
+            _discount = new Discount(10, DateTime.Now.AddDays(5));
+            
         }
         [TestMethod]
         [TestCategory("Domain")]
@@ -67,5 +70,14 @@ namespace Store.Tests.Entities
             _order.AddItem(_product, -10);
             Assert.AreEqual(_order.Items.Count, 0);
         }
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_valid_order_the_total_order_must_be_equal_50()
+        {
+            _order.AddItem(_product, 5);
+            Assert.AreEqual(_order.Total(), 50);
+        }
+
     }
 }
