@@ -89,6 +89,15 @@ namespace Store.Tests.Entities
             Assert.AreEqual(_order.Total(), 60);
         }
 
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_invalid_discount_total_order_must_be_equal_60()
+        {
+            _order = new Order(_customer, 10, null);
+            _order.AddItem(_product, 5);
+            Assert.AreEqual(_order.Total(), 60);
+        }
+
 
     }
 }
