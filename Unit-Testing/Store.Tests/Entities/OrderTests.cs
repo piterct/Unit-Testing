@@ -98,6 +98,15 @@ namespace Store.Tests.Entities
             Assert.AreEqual(_order.Total(), 60);
         }
 
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_valid_discount_equal_10_total_order_must_be_equal_50()
+        {
+            _order = new Order(_customer, 0, _discount);
+            _order.AddItem(_product, 4);
+            Assert.AreEqual(_order.Total(), 50);
+        }
+
 
     }
 }
