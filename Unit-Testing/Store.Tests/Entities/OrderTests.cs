@@ -8,9 +8,8 @@ namespace Store.Tests.Entities
     [TestClass]
     public class OrderTests
     {
-
         private readonly Customer _customer;
-        private readonly Order _order;
+        private Order _order;
         private readonly Product _product;
         private readonly Discount _discount;
 
@@ -20,7 +19,7 @@ namespace Store.Tests.Entities
             _order = new Order(_customer, 0, null);
             _product = new Product("Produto 1", 10, true);
             _discount = new Discount(10, DateTime.Now.AddDays(5));
-            
+
         }
         [TestMethod]
         [TestCategory("Domain")]
@@ -78,6 +77,18 @@ namespace Store.Tests.Entities
             _order.AddItem(_product, 5);
             Assert.AreEqual(_order.Total(), 50);
         }
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_expired_discount_total_order_must_be_equal_60()
+        {
+            _discount.SetExpireDate(DateTime.Now.AddDays(-10));
+            _discount.Value();
+            _order = new Order(_customer, 0, _discount);
+            _order.AddItem(_product, 6);
+            Assert.AreEqual(_order.Total(), 60);
+        }
+
 
     }
 }

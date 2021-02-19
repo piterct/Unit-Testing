@@ -27,5 +27,10 @@ namespace Store.Domain.Entities
                 return 0;
 
         }
+
+        public void SetExpireDate(DateTime expireDate)
+        {
+            this.ExpireDate = expireDate;
+        }
     }
 }
