@@ -117,6 +117,13 @@ namespace Store.Tests.Entities
             Assert.AreEqual(_order.Total(), 60);
         }
 
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_order_without_customer()
+        {
+            _order = new Order(null, 10, _discount);
+            Assert.AreEqual(_order.Valid, false);
+        }
 
     }
 }
