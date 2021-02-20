@@ -47,7 +47,7 @@ namespace Store.Domain.Entities
             }
 
             total += DeliveryFee;
-            total += Discount != null ? Discount.Value() : 0;
+            total -= Discount != null ? Discount.Value() : 0;
 
             return total;
         }

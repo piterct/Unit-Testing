@@ -11,7 +11,7 @@ namespace Store.Tests.Entities
         private readonly Customer _customer;
         private Order _order;
         private readonly Product _product;
-        private readonly Discount _discount;
+        private Discount _discount;
 
         public OrderTests()
         {
@@ -103,8 +103,18 @@ namespace Store.Tests.Entities
         public void There_is_a_valid_discount_equal_10_total_order_must_be_equal_50()
         {
             _order = new Order(_customer, 0, _discount);
-            _order.AddItem(_product, 4);
+            _order.AddItem(_product, 6);
             Assert.AreEqual(_order.Total(), 50);
+        }
+
+
+        [TestMethod]
+        [TestCategory("Domain")]
+        public void There_is_a_delivery_fee_equal_10_total_order_must_be_equal_60()
+        {
+            _order = new Order(_customer, 10, _discount);
+            _order.AddItem(_product, 6);
+            Assert.AreEqual(_order.Total(), 60);
         }
 
 
