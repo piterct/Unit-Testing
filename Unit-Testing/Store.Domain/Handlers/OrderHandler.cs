@@ -4,7 +4,9 @@ using Store.Domain.Commands.Interfaces;
 using Store.Domain.Entities;
 using Store.Domain.Handlers.Interfaces;
 using Store.Domain.Repositories;
+using Store.Domain.Utils;
 using System;
+using System.Linq;
 
 namespace Store.Domain.Handlers
 {
@@ -49,14 +51,15 @@ namespace Store.Domain.Handlers
                 var product = products.Where(x => x.Id == item.Product).FirstOrDefault();
                 order.AddItem(product, item.Quantity);
 
-                AddNotifications(order.Notifications);
-
-                if (Invalid)
-                    return new GenericCommandResult(false, "Failure generate order", Notifications);
-
-                _orderRepository.Save(order);
-                return new GenericCommandResult(true, $"Order {order.Number} generate successful", order);
             }
+
+            AddNotifications(order.Notifications);
+
+            if (Invalid)
+                return new GenericCommandResult(false, "Failure generate order", Notifications);
+
+            _orderRepository.Save(order);
+            return new GenericCommandResult(true, $"Order {order.Number} generate successful", order);
         }
     }
 }
