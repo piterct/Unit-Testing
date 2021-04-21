@@ -4,6 +4,7 @@ using Store.Domain.Handlers;
 using Store.Domain.Repositories;
 using Store.Tests.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Store.Tests.Commands
 {
@@ -15,6 +16,7 @@ namespace Store.Tests.Commands
         private readonly IDiscountRepository _discountRepository;
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
+        private CreateOrderCommand _orderCreateCommand;
 
         public CreateOrderCommandTests()
         {
@@ -23,23 +25,22 @@ namespace Store.Tests.Commands
             _discountRepository = new FakeDiscountRepository();
             _productRepository = new FakeProductRepository();
             _orderRepository = new FakeOrderRepository();
+
+            List<CreateOrderItemCommand> itemsOrder = new List<CreateOrderItemCommand>();
+            itemsOrder.Add(new CreateOrderItemCommand(Guid.NewGuid(), 1));
+            itemsOrder.Add(new CreateOrderItemCommand(Guid.NewGuid(), 3));
+
+            _orderCreateCommand = new CreateOrderCommand("", "05465845", "Azure", itemsOrder);
         }
 
         [TestMethod]
         [TestCategory("Commands")]
         public void There_is_an_invalid_command_doesnt_create_order()
         {
-            var command = new CreateOrderCommand();
-            command.Customer = "";
-            command.ZipCode = "131100782";
-            command.PromoCode = "215445";
-            command.Items.Add(new CreateOrderItemCommand(Guid.NewGuid(), 1));
-            command.Items.Add(new CreateOrderItemCommand(Guid.NewGuid(), 1));
-            command.Validate();
-
-            Assert.AreEqual(command.Valid, false);
+            _orderCreateCommand.Validate();
+            Assert.AreEqual(_orderCreateCommand.Valid, false);
         }
 
-       
+
     }
 }

@@ -4,6 +4,7 @@ using Store.Domain.Handlers;
 using Store.Domain.Repositories;
 using Store.Tests.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Store.Tests.Handlers
 {
@@ -15,6 +16,7 @@ namespace Store.Tests.Handlers
         private readonly IDiscountRepository _discountRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private CreateOrderCommand _orderCreateCommand;
 
         public OrderHandlerTests()
         {
@@ -23,22 +25,21 @@ namespace Store.Tests.Handlers
             _discountRepository = new FakeDiscountRepository();
             _orderRepository = new FakeOrderRepository();
             _productRepository = new FakeProductRepository();
+
+            List<CreateOrderItemCommand> itemsOrder = new List<CreateOrderItemCommand>();
+            itemsOrder.Add(new CreateOrderItemCommand(Guid.NewGuid(), 1));
+            itemsOrder.Add(new CreateOrderItemCommand(Guid.NewGuid(), 3));
+
+            _orderCreateCommand = new CreateOrderCommand("Michael Peter", "05465845", "Azure", itemsOrder);
         }
 
         [TestMethod]
         [TestCategory("Handlers")]
         public void There_is_a_valid_command_must_create_order()
         {
-            var command = new CreateOrderCommand();
-            command.Customer = "12345678";
-            command.ZipCode = "13411080";
-            command.PromoCode = "12345678";
-            command.Items.Add(new CreateOrderItemCommand(Guid.NewGuid(), 1));
-            command.Items.Add(new CreateOrderItemCommand(Guid.NewGuid(), 1));
-
             var handler = new OrderHandler(_customerRepository, _deliveryFeeRepository, _discountRepository, _productRepository, _orderRepository);
 
-            handler.Handle(command);
+            handler.Handle(_orderCreateCommand);
 
             Assert.AreEqual(handler.Valid, true);
         }
