@@ -5,7 +5,6 @@ using Store.Domain.Entities;
 using Store.Domain.Handlers.Interfaces;
 using Store.Domain.Repositories;
 using Store.Domain.Utils;
-using System;
 using System.Linq;
 
 namespace Store.Domain.Handlers

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Store.Domain.Commands;
 using Store.Domain.Entities;
 using Store.Domain.Enums;
 using System;
@@ -13,6 +14,7 @@ namespace Store.Tests.Entities
         private readonly Product _product;
         private Discount _discount;
 
+
         public OrderTests()
         {
             _customer = new Customer("Michael Peter", "michael_piterct@hotmail.com");
@@ -22,21 +24,21 @@ namespace Store.Tests.Entities
 
         }
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void Have_a_new_valid_order_it_was_must_generate_a_number_with_8_characters()
         {
             Assert.AreEqual(8, _order.Number.Length);
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void Have_a_new_order_your_status_must_be_waiting_payment()
         {
             Assert.AreEqual(_order.Status, EOrderStatus.WaitingPayment);
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void Have_a_payment_order_your_status_must_be_waiting_delivery()
         {
             _order.AddItem(_product, 1);
@@ -45,7 +47,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void The_status_order_must_be_canceled_when_the_order_was_cancel()
         {
             _order.AddItem(_product, 1);
@@ -55,7 +57,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_no_product_in_item_not_add_item()
         {
             _order.AddItem(null, 10);
@@ -63,7 +65,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_item_order_with_quantity_less_or_equal_zero_not_must_add_item()
         {
             _order.AddItem(_product, -10);
@@ -71,7 +73,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_valid_order_the_total_order_must_be_equal_50()
         {
             _order.AddItem(_product, 5);
@@ -79,7 +81,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_expired_discount_total_order_must_be_equal_60()
         {
             _discount.SetExpireDate(DateTime.Now.AddDays(-10));
@@ -90,7 +92,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_invalid_discount_total_order_must_be_equal_60()
         {
             _order = new Order(_customer, 10, null);
@@ -99,7 +101,7 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_valid_discount_equal_10_total_order_must_be_equal_50()
         {
             _order = new Order(_customer, 0, _discount);
@@ -109,7 +111,7 @@ namespace Store.Tests.Entities
 
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_delivery_fee_equal_10_total_order_must_be_equal_60()
         {
             _order = new Order(_customer, 10, _discount);
@@ -118,12 +120,14 @@ namespace Store.Tests.Entities
         }
 
         [TestMethod]
-        [TestCategory("Domain")]
+        [TestCategory("Entities")]
         public void There_is_a_order_without_customer()
         {
             _order = new Order(null, 10, _discount);
             Assert.AreEqual(_order.Valid, false);
         }
+
+  
 
     }
 }
